@@ -1,0 +1,11 @@
+/* Styling for Demo Page, not part of plugin */
+
+body {
+    padding: 30px;
+}
+
+h3 {
+    border-bottom: 1px solid #000;
+    padding-bottom: 15px;
+    margin-top: 50px;
+}

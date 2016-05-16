@@ -21,7 +21,7 @@ The follow properties are available for TagCloud upon initialization:
  Property | Description | Default
  -------- | ----------- | -------
  Max | The Maximum Number of tags that can be selected | Infinite (No max)
- 
+
 Example usage:
 
 ```HTML
@@ -41,10 +41,10 @@ $('#tagcloud').tagcloud({
 });
 </script>
 ```
- 
+
 ## Customization
 
-TO-DO
+TO-DOff
 
 ## License
 
