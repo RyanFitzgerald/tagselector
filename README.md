@@ -14,6 +14,10 @@ All the installation that is required is simply including the compiled CSS and J
 
 TagCloud will now be available on every page it is included on.
 
+## Demo
+
+A demo can be found [here](http://ryanfitzgerald.github.io/tagcloud/demo.html).
+
 ## Configuration
 
 The follow properties are available for TagCloud upon initialization:
@@ -21,7 +25,7 @@ The follow properties are available for TagCloud upon initialization:
  Property | Description | Default
  -------- | ----------- | -------
  Max | The Maximum Number of tags that can be selected | Infinite (No max)
- 
+
 Example usage:
 
 ```HTML
@@ -41,10 +45,19 @@ $('#tagcloud').tagcloud({
 });
 </script>
 ```
- 
+
 ## Customization
 
-TO-DO
+The base styling that comes with the tag cloud can be easily customized.
+
+The followed classes are available (as well as what they are):
+
+ Class Name | Description
+ ---------- | -----------
+ .tc-wrapper | Wraps the entire tag cloud (including hidden select)
+ .tc-cloud | Wraps the tags
+ .tc-tag | Individual Tags
+ .tc-selected | Any currently selected tags
 
 ## License
 
