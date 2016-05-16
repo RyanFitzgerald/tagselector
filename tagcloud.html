@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tag Cloud - Demo Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
+    <link rel="stylesheet" href="tagcloud.css">
+</head>
+<style>
+    body {
+        padding: 15px;
+    }
+</style>
+<body>
+    <h1>Tag Cloud Demo</h1>
+    <hr />
+    <h2>No Maximum Value</h2>
+    <select id="tagcloud-1" multiple>
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="opel">Opel</option>
+        <option value="audi">Audi</option>
+        <option value="ford">Ford</option>
+    </select>
+    <h2>Maximum of 3 Values</h2>
+    <select id="tagcloud-2" multiple>
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="opel">Opel</option>
+        <option value="audi">Audi</option>
+        <option value="ford">Ford</option>
+    </select>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="tagcloud.js"></script>
+    <script>
+        $('#tagcloud-1').tagcloud();
+        $('#tagcloud-2').tagcloud({
+            max: 3
+        });
+    </script>
+</body>
+</html>
