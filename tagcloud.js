@@ -42,10 +42,10 @@
             // Create tags
             $options.each(function(i) {
                 $parent.find('.tc-cloud').append('<span class="tc-tag" data-tag="'+i+'">'+$(this).text()+'</span>');
-				if ($(this).is(':selected')) {
-					$parent.find('.tc-tag[data-tag='+i+']').addClass('tc-selected');
-					selected.push(i);
-				}
+                if ($(this).is(':selected')) {
+                    $parent.find('.tc-tag[data-tag='+i+']').addClass('tc-selected');
+                    selected.push(i);
+                }
             });
 
             // Manage clicks
