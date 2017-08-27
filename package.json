@@ -1,6 +1,6 @@
 {
   "name": "tagselector",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Easily turns multiple selects into styleable tag clouds",
   "main": "dist/tagselector.js",
   "scripts": {
