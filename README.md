@@ -79,6 +79,8 @@ By default, the wrapper and tags don't come with any styling, leaving the look a
 | .tagselector-tag | Each individiual tag span |
 | .active | Class applied to any actively selected tag |
 
+If you would also like some basic styling out of the box, include ``dist/tagselector.css``.
+
 ## License
 
 MIT License. See LICENSE.MD
