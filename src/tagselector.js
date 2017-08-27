@@ -1,7 +1,7 @@
 /*!
  * Name: tagselector.js
  * Author: Ryan Fitzgerald
- * Version: 0.0.2
+ * Version: 0.0.3
  * Repo: https://github.com/RyanFitzgerald/tagselector
  * Issues: https://github.com/RyanFitzgerald/tagselector/issues
  * License: MIT
