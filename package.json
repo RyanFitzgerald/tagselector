@@ -1,0 +1,42 @@
+{
+  "name": "tagselector",
+  "version": "0.0.1",
+  "description": "Easily turns multiple selects into styleable tag clouds",
+  "main": "dist/tagselector.js",
+  "scripts": {
+    "watch": "gulp watch",
+    "lint": "eslint src",
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyanFitzgerald/tagselector.git"
+  },
+  "keywords": [
+    "tag",
+    "select",
+    "cloud",
+    "multiple",
+    "select",
+    "dropdown"
+  ],
+  "author": {
+    "name": "Ryan Fitzgerald",
+    "url": "https://ryanfitzgerald.ca"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RyanFitzgerald/tagselector/issues"
+  },
+  "homepage": "https://github.com/RyanFitzgerald/tagselector#readme",
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-wait": "0.0.2"
+  }
+}

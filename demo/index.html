@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TagCloud</title>
+</head>
+<body>
+<select id="test">
+  <option value="1a">1 text</option>
+  <option value="2a">2 text</option>
+  <option value="3a">3 text</option>
+</select>
+<script src="../dist/tagselector.js"></script>
+<script>
+  var tagSelector = new TagSelector("test", {
+    max: 2,
+    onInit: function() {
+      console.log('inited!')
+    },
+    onDestroy: function() {
+      console.log('destroyed!')
+    },
+    onSelect: function(value, text) {
+      console.log(`Selected item with value: '${value}' and text: '${text}'`)
+    },
+    onDeselect: function(value, text) {
+      console.log(`Deselected item with value: '${value}' and text: '${text}'`)
+    },
+  });
+</script>
+</body>
+</html>

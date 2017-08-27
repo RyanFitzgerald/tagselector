@@ -1,0 +1,12 @@
+.tagselector-tag {
+  background: #eee;
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+
+  &:hover,
+  &.active {
+    background: #ccc;
+  }
+}
