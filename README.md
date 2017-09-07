@@ -44,7 +44,7 @@ tagSelector.reload();
 
 You can also destroy the instance as follows:
 
-```javscript
+```javascript
 var tagSelector = new TagSelector('someSelect');
 tagSelector.destroy();
 ```
