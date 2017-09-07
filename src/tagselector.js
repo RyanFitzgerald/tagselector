@@ -24,12 +24,7 @@
 })(this, function() {
   'use strict';
 
-  // --- Variable Definitions ---
-  var settings;
-  var target;
-  var options;
-  var selected = [];
-  var wrapper;
+  // Store defaults
   var defaults = {
     max: false,
     onInit: false,
@@ -40,35 +35,50 @@
 
   /*
    * Overwrite defualts with user settings
+   * @private
    */
-  function getSettings(userSettings) {
+  var extend = function(target, userSettings) {
     if (typeof userSettings !== 'object') {
       return;
     }
 
     var updated = {};
-    Object.keys(defaults).forEach(function(key) {
+    Object.keys(target).forEach(function(key) {
       if (userSettings[key]) {
         updated[key] = userSettings[key];
       } else {
-        updated[key] = defaults[key];
+        updated[key] = target[key];
       }
     });
 
     return updated;
-  }
+  };
 
   /*
    * Inserts an element after a given element
+   * @private
    */
-  function insertAfter(ele, ref) {
+  var insertAfter = function(ele, ref) {
     ref.parentNode.insertBefore(ele, ref.nextSibling);
-  }
+  };
 
   /*
-   * Get all the select options and text
-   */ 
-  function getOptions() {
+   * Check if an element has a class
+   * @private
+   */
+  var hasClass = function(ele, cls) {
+    return ('' + ele.className + '').indexOf(' ' + cls + '') > -1;
+  };
+
+  /*
+   * Remove a class from an object
+   * @private
+   */
+  var removeClass = function(ele, cls) {
+    ele.className = ele.className.replace(cls, '');
+  };
+
+  var getOptions = function(target) {
     var optionList = target.options;
     var optionObj = {};
 
@@ -81,180 +91,192 @@
     }
 
     return optionObj;
-  }
+  };
 
-  /*
-   * Check if an element has a class
-   */
-  function hasClass(ele, cls) {
-    return ('' + ele.className + '').indexOf(' ' + cls + '') > -1;
-  }
-
-  /*
-   * Remove a class from an object
-   */
-  function removeClass(ele, cls) {
-    ele.className = ele.className.replace(cls, '');
-  }
-
-  /*
-   * Handle click events for tags
-   */ 
-  function clickHandler() {
-    var key = this.dataset.tagkey;
-    var index = options[key].index;
-
-    if (hasClass(this, 'active')) {
-      // Remove class
-      removeClass(this, ' active');
-
-      // Remove key from selected array
-      var keyIndex = selected.indexOf(key);
-      if (keyIndex > -1) {
-        selected.splice(keyIndex, 1);
-      }
-
-      // Remove selection from target
-      target.options[index].selected = false;
-
-      // Call deselect function if provided
-      if (settings.onDeselect && typeof(settings.onDeselect) === 'function') {
-        settings.onDeselect(key, options[key].text);
-      }
-    } else {
-      // Add class
-      this.className += ' active';
-
-      // Push key to selected array
-      selected.push(key);
-
-      // Select it
-      target.options[index].selected = true;
-
-      // Call select function if provided
-      if (settings.onSelect && typeof(settings.onSelect) === 'function') {
-        settings.onSelect(key, options[key].text);
-      }
-
-      // Check if greater than max setting
-      if (settings.max && selected.length > settings.max) {
-        // Get index
-        var removeIndex = options[selected[0]].index;
-
-        // Unselect first element in selected array
-        target.options[removeIndex].selected = false;
-
-        // Remove class from first element
-        removeClass(wrapper.querySelector('.active[data-tagkey="'+ selected[0] +'"]'), ' active');
-
-        // Pop first element in array
-        selected.shift();
-
-        // Call deselect function if provided
-        if (settings.onDeselect && typeof(settings.onDeselect) === 'function') {
-          settings.onDeselect(selected[0], options[selected[0]].text);
-        }
-      }
-    }
-  }
-
-  /*
-   * Sets up the styleable tag cloud
-   */
-  function setup() {
-    // Ensure multiple attribute is set
-    target.setAttribute('multiple', true);
-
-    // Get and store options
-    options = getOptions();
-
-    // Create wrapper element
-    wrapper = document.createElement('div');
-    wrapper.className = 'tagselector-wrap';
-
-    // Hide target
-    target.style.display = 'none';
-
-    // Insert wrapper after target
-    insertAfter(wrapper, target);
-
-    // Add tags to wrapper
-    Object.keys(options).forEach(function(key, i) {
-      // Create tag and add required information
-      var tag = document.createElement('span');
-      tag.className = 'tagselector-tag';
-      tag.innerHTML = options[key].text;
-      tag.dataset.tagkey = key;
-      tag.dataset.tag = i;
-
-      // Check if active
-      if (options[key].selected) {
-        // Add class
-        tag.className += ' active';
-  
-        // Push key to selected array
-        selected.push(key);
-      }
-
-      // Add event listener
-      tag.addEventListener('click', clickHandler);
-
-      // Add to wrapper
-      wrapper.appendChild(tag);
-    });
-  } 
-
-  /*
-   * Initializes tagselector with given element and user settings
-   * 
-   * @param {Object} ele - references 
-   */
   function TagSelector(ele, userSettings) {
-    // Attempt to get target
-    target = document.getElementById(ele) || false;
+    // Get user settings object
+    var settingsObj = userSettings || {};
+
+    // Get element
+    this.target = document.getElementById(ele) || false;
+
+    // Create empty selected array
+    this.selected = [];
+
+    // Get select options
+    this.options = getOptions(this.target);
+
+    // Create wrapper element and apply class
+    this.wrapper = document.createElement('div');
+    this.wrapper.className = 'tagselector-wrap';
 
     // Ensure target was a valid select field
-    if (!target || target.tagName !== 'SELECT') {
+    if (!this.target || this.target.tagName !== 'SELECT') {
       console.error('Error: Must provide a valid ID for select field');
       return;
     }
 
-    // Set settings based on user settings if provided
-    if (typeof userSettings !== 'undefined') {
-      settings = getSettings(userSettings);
-    } else {
-      settings = defaults;
-    }
+    // Extend defaults with user settings
+    this.settings = extend(defaults, settingsObj);
 
-    // Run setup
-    setup();
-
-    // Call init function if provided
-    if (settings.onInit && typeof(settings.onInit) === 'function') {
-      settings.onInit();
-    }
+    // Initialize
+    this.init();
   }
 
-  /*
-   * Destroys the current instance of tagselector
-   */
+  TagSelector.prototype.init = function() {
+    // Store necessary variables
+    var _options = this.options;
+    var _selected = this.selected;
+    var _wrapper = this.wrapper;
+    var _tagListener = this.tagListener.bind(this);
+
+    // Ensure multiple attribute is set
+    this.target.setAttribute('multiple', true);
+
+    // Hide target
+    this.target.style.display = 'none';
+
+    // Insert wrapper after target
+    insertAfter(this.wrapper, this.target);
+
+    // Add tags to wrapper
+    Object.keys(_options).forEach(function(key, i) {
+      // Create tag and add required information
+      var tag = document.createElement('span');
+      tag.className = 'tagselector-tag';
+      tag.innerHTML = _options[key].text;
+      tag.dataset.tagkey = key;
+      tag.dataset.tag = i;
+
+      // Check if active
+      if (_options[key].selected) {
+        // Add class
+        tag.className += ' active';
+  
+        // Push key to selected array
+        _selected.push(key);
+      }
+
+      // Add event listener
+      _tagListener(tag);
+
+      // Add to wrapper
+      _wrapper.appendChild(tag);
+    });
+
+    // Call init function if provided
+    if (this.settings.onInit && typeof(this.settings.onInit) === 'function') {
+      this.settings.onInit();
+    }
+  };
+
+  TagSelector.prototype.tagListener = function(tag) {
+    // Store needed variables from instance
+    var _target = this.target;
+    var _options = this.options;
+    var _selected = this.selected;
+    var _settings = this.settings;
+    var _wrapper = this.wrapper;
+
+    // Add event listener
+    tag.addEventListener('click', function() {
+      var key = this.dataset.tagkey;
+      var index = _options[key].index;
+
+      if (hasClass(this, 'active')) {
+        // Remove class
+        removeClass(this, ' active');
+  
+        // Remove key from selected array
+        var keyIndex = _selected.indexOf(key);
+        if (keyIndex > -1) {
+          _selected.splice(keyIndex, 1);
+        }
+  
+        // Remove selection from target
+        _target.options[index].selected = false;
+  
+        // Call deselect function if provided
+        if (_settings.onDeselect && typeof(_settings.onDeselect) === 'function') {
+          _settings.onDeselect(key, _options[key].text);
+        }
+      } else {
+        // Add class
+        this.className += ' active';
+  
+        // Push key to selected array
+        _selected.push(key);
+  
+        // Select it
+        _target.options[index].selected = true;
+  
+        // Call select function if provided
+        if (_settings.onSelect && typeof(_settings.onSelect) === 'function') {
+          _settings.onSelect(key, _options[key].text);
+        }
+  
+        // Check if greater than max setting
+        if (_settings.max && _selected.length > _settings.max) {
+          // Get index
+          var removeIndex = _options[_selected[0]].index;
+  
+          // Unselect first element in selected array
+          _target.options[removeIndex].selected = false;
+  
+          // Remove class from first element
+          removeClass(_wrapper.querySelector('.active[data-tagkey="'+ _selected[0] +'"]'), ' active');
+  
+          // Pop first element in array
+          _selected.shift();
+  
+          // Call deselect function if provided
+          if (_settings.onDeselect && typeof(_settings.onDeselect) === 'function') {
+            _settings.onDeselect(_selected[0], _options[_selected[0]].text);
+          }
+        }
+      }
+    });
+  };
+
   TagSelector.prototype.destroy = function() {
-    // Show select again
-    target.style.display = 'initial';
+    // Clear instance variables
+    this.options = null;
+    this.selected = null;
 
     // Delete wrapper
-    wrapper.parentNode.removeChild(wrapper);
+    this.wrapper.parentNode.removeChild(this.wrapper);
+    this.wrapper = null;
+    
+    // Show target and delete
+    this.target.style.display = 'initial';
+    this.target = null;
 
-    // Clear all arrays and objects
-    settings = false;
-    target = false;
-    options = false;
-    selected = [];
-
-    // Call destroy function if provided
-    if (settings.onDestroy && typeof(settings.onDestroy) === 'function') {
-      settings.onDestroy();
+    // Call init function if provided
+    if (this.settings.onDestroy && typeof(this.settings.onDestroy) === 'function') {
+      this.settings.onDestroy();
     }
+
+    // Delete settings
+    this.settings = null;
+  };
+
+  TagSelector.prototype.reload = function() {
+    // Clear instance variables
+    this.options = null;
+    this.selected = [];
+
+    // Delete wrapper
+    this.wrapper.parentNode.removeChild(this.wrapper);
+
+    // Get select options
+    this.options = getOptions(this.target);
+  
+    // Create wrapper element and apply class
+    this.wrapper = document.createElement('div');
+    this.wrapper.className = 'tagselector-wrap';
+
+    // Initialize
+    this.init();
   };
 
   // --- Public API ---
