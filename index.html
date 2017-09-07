@@ -4,119 +4,59 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tag Cloud - A jQuery Tag Cloud Generator Using Select Fields</title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800,400italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="css/prism.css" />
-    <link rel="stylesheet" type="text/css" href="css/gridious.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/tagcloud.css" />
-    <link rel="stylesheet" type="text/css" href="css/styles.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="js/tagcloud.js"></script>
-    <script src="js/prism.js"></script>
+    <title>Tag Selector Demo</title>
+    <link href="tagselector.css" rel="stylesheet">
 </head>
+<style>
+    #select3 {
+        display: block !important;
+    }
+</style>
 <body>
-<div id="display">
-    <h1>TagCloud</h1>
-    <h2>A jQuery Tag Cloud Generator Using Select Fields</h2>
-    <a href="https://github.com/RyanFitzgerald/tagcloud/archive/master.zip">Download</a>
-    <a href="https://github.com/RyanFitzgerald/tagcloud">View on GitHub</a>
-</div><!-- End display -->
-<div id="content">
-    <h2>TagCloud</h2>
-    <p>
-		TagCloud is a jQuery tag cloud generator. It uses the HTML mutiple select field to generate the tags and can be used in forms and anything else a normal HTML select field would be used in.
-	</p>
-    <h2>Installation & Setup</h2>
-    <p>
-        All the installation that is required is simply including the compiled CSS and JS files in your document and TagCloud will now be available on every page it is included on.
-    </p>
-    <h2>Configuration</h2>
-    <p>
-        The follow properties are available for TagCloud upon initialization
-    </p>
-    <table>
-        <thead>
-            <tr>
-                <th>Parameter</th>
-                <th>Description</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Max</td>
-            <td>The Maximum Number of tags that can be selected</td>
-            <td>Infinite (No Max)</td>
-        </tr>
-        </tbody>
-    </table>
-    <h2>Example Usage</h2>
-    <p>
-        An example usage showing each parameter is as follows:
-    </p>
-    <pre><code class="language-markup">
-    &lt;select id=&quot;tagcloud&quot; multiple&gt;
-        &lt;option value=&quot;volvo&quot;&gt;Volvo&lt;/option&gt;
-        &lt;option value=&quot;saab&quot;&gt;Saab&lt;/option&gt;
-        &lt;option value=&quot;opel&quot;&gt;Opel&lt;/option&gt;
-        &lt;option value=&quot;audi&quot;&gt;Audi&lt;/option&gt;
-        &lt;option value=&quot;ford&quot;&gt;Ford&lt;/option&gt;
-    &lt;/select&gt;
-    </code></pre>
-	<pre><code class="language-javascript">
-    $('#tagcloud').tagcloud({
-        max: 3
-    });
-	</code></pre>
-    <h2>Customization</h2>
-	<p>
-		The base styling that comes with the tag cloud can be easily customized.
-	</p>
-    <p>
-        The followed classes are available (as well as what they are):
-    </p>
-    <table>
-        <thead>
-            <tr>
-                <th>Class Name</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-    <tbody>
-        <tr>
-			<td>.tc-wrapper</td>
-			<td>Wraps the entire tag cloud (including hidden select)</td>
-        </tr>
-		<tr>
-			<td>.tc-cloud</td>
-			<td>Wraps all the tags</td>
-        </tr>
-		<tr>
-			<td>.tc-tag</td>
-			<td>Individual Tags</td>
-        </tr>
-		<tr>
-			<td>.tc-selected</td>
-			<td>Any currently selected tags</td>
-        </tr>
-    </tbody>
-    </table>
-    <h2>License</h2>
-    <p>
-        MIT License
-    </p>
-    <div id="buttons">
-        <a href="demo.html" class="button">View Demo</a>
-        <a href="https://github.com/RyanFitzgerald/Gridious/tagcloud/master.zip" class="button">Download</a>
-        <a href="https://github.com/RyanFitzgerald/tagcloud" class="button">View on GitHub</a>
-    </div>
-</div><!-- End content -->
-<div id="footer">
-    <a href="https://ryanfitzgerald.ca" target="_blank">Website</a>
-    <a href="https://github.com/RyanFitzgerald" target="_blank">GitHub</a>
-    <a href="https://ca.linkedin.com/in/ryanfitzgerald10" target="_blank">LinkedIn</a>
-    <a href="http://stackoverflow.com/users/5343740/ryan-fitzgerald" target="_blank">StackOverflow</a>
-</div><!-- End footer -->
+<h1>Tag Selector Demo</h1>
+<hr>
+<h2>No Tag Limit</h2>
+<select id="select1">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+    <option value="audi">Audi</option>
+</select>
+<h2>2 Tag Limit with callbacks (see console logs)</h2>
+<select id="select2">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+    <option value="audi">Audi</option>
+</select>
+<hr>
+<h2>Behind The Scenes</h2>
+<p>When you select a tag, it automatically updates the hidden multiselect field. To see what's happening behind the scenes, click the tags below.</p>
+<select id="select3">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+    <option value="audi">Audi</option>
+</select>
+<script src="tagselector.js"></script>
+<script>
+var a = new TagSelector('select1');
+var b = new TagSelector('select2', {
+    max: 2,
+    onInit: function() {
+        console.log('inited!')
+    },
+    onDestroy: function() {
+        console.log('destroyed!')
+    },
+    onSelect: function(value, text) {
+        console.log(`Selected item with value: '${value}' and text: '${text}'`)
+    },
+    onDeselect: function(value, text) {
+        console.log(`Deselected item with value: '${value}' and text: '${text}'`)
+    }
+});
+var c = new TagSelector('select3');
+</script>
 </body>
 </html>
