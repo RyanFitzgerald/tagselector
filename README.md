@@ -1,6 +1,8 @@
 # Tag Selector
 
-Tag Selector is a lightweight JavaScript plugin that converts Select Fields with the multiple attribute to a series of selectable and styleable spans. Using this, you can still have the default functionality of a multiple select field, but the ability to style them in a better way.
+Tag Selector is a lightweight JavaScript plugin that converts Select Fields with the multiple attribute to a series of selectable and styleable spans. Using this, you can still have the default functionality of a multiple select field, but the ability to style them in a better way. It also works fully on mobile devices.
+
+### See demo [here](http://ryanfitzgerald.github.io/tagselector/)
 
 ## Installation
 
@@ -33,6 +35,13 @@ Next, create a new instance of tagselector and pass in the select ID:
 var tagSelector = new TagSelector('someSelect');
 ```
 
+To reload a current instance, simply do the following:
+
+```javascript
+var tagSelector = new TagSelector('someSelect');
+tagSelector.reload();
+```
+
 You can also destroy the instance as follows:
 
 ```javscript
@@ -57,7 +66,7 @@ var tagSelector = new TagSelector('someSelect', {
   },
   onDeselect: function(value, text) {
     console.log(`Deselected item with value: '${value}' and text: '${text}'`)
-  },
+  }
 });
 ```
 
