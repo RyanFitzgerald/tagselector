@@ -22,8 +22,8 @@
 </select>
 <script src="../dist/tagselector.js"></script>
 <script>
-  var a = new TagSelector('test');
-  var b = new TagSelector('test2', {
+  var a = new TagSelector(document.getElementById('test'));
+  var b = new TagSelector(document.getElementById('test2'), {
     max: 2,
     onInit: function() {
       console.log('inited!')

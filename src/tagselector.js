@@ -98,7 +98,13 @@
     var settingsObj = userSettings || {};
 
     // Get element
-    this.target = document.getElementById(ele) || false;
+    this.target = ele || false;
+
+    // Ensure target was a valid select field
+    if (!this.target || this.target === null || this.target.tagName !== 'SELECT') {
+      console.error('Error: Must provide a valid ID for select field');
+      return;
+    }
 
     // Create empty selected array
     this.selected = [];
@@ -109,12 +115,6 @@
     // Create wrapper element and apply class
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'tagselector-wrap';
-
-    // Ensure target was a valid select field
-    if (!this.target || this.target.tagName !== 'SELECT') {
-      console.error('Error: Must provide a valid ID for select field');
-      return;
-    }
 
     // Extend defaults with user settings
     this.settings = extend(defaults, settingsObj);

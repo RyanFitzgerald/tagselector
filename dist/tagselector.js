@@ -63,15 +63,15 @@
     };
     function TagSelector(ele, userSettings) {
         var settingsObj = userSettings || {};
-        this.target = document.getElementById(ele) || false;
+        this.target = ele || false;
+        if (!this.target || this.target === null || this.target.tagName !== "SELECT") {
+            console.error("Error: Must provide a valid ID for select field");
+            return;
+        }
         this.selected = [];
         this.options = getOptions(this.target);
         this.wrapper = document.createElement("div");
         this.wrapper.className = "tagselector-wrap";
-        if (!this.target || this.target.tagName !== "SELECT") {
-            console.error("Error: Must provide a valid ID for select field");
-            return;
-        }
         this.settings = extend(defaults, settingsObj);
         this.init();
     }

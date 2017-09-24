@@ -31,23 +31,26 @@ To use, simply create a select field with the ``multiple`` attribute and an ID, 
 </select>
 ```
 
-Next, create a new instance of tagselector and pass in the select ID:
+Next, create a new instance of tagselector and pass in the Javascript Object:
 
 ```javascript
-var tagSelector = new TagSelector('someSelect');
+var selectField = document.getElementById('someSelect');
+var tagSelector = new TagSelector(selectField);
 ```
 
 To reload a current instance, simply do the following:
 
 ```javascript
-var tagSelector = new TagSelector('someSelect');
+var selectField = document.getElementById('someSelect');
+var tagSelector = new TagSelector(selectField);
 tagSelector.reload();
 ```
 
 You can also destroy the instance as follows:
 
 ```javascript
-var tagSelector = new TagSelector('someSelect');
+var selectField = document.getElementById('someSelect');
+var tagSelector = new TagSelector(selectField);
 tagSelector.destroy();
 ```
 ### Customization
@@ -55,7 +58,8 @@ tagSelector.destroy();
 Tag selector comes with a number of customizations that can be passed as an optional parameter:
 
 ```javascript
-var tagSelector = new TagSelector('someSelect', {
+var selectField = document.getElementById('someSelect');
+var tagSelector = new TagSelector(selectField, {
   max: 2,
   onInit: function() {
     console.log('inited!')
