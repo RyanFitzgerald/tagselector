@@ -4,40 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>TagSelector</title>
+  <title>Tag Selector Demo</title>
   <link rel="stylesheet" href="../dist/tagselector.css">
 </head>
+<style>
+  #field4 {
+    display: block !important;
+  }
+
+  p {
+    max-width: 700px;
+  }
+</style>
 <body>
-<h2>No Tag Limit</h2>
-<select id="test">
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+<h1>Tag Selector Demos</h1>
+<hr>
+<h2>Regular Select Field</h2>
+<select id="field1">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
 </select>
-<h2>2 Tag Limit with Callbacks (see console logs)</h2>
-<select id="test2">
-  <option value="a">One</option>
-  <option value="b">Two</option>
-  <option value="c" selected>Three</option>
+<h2>Regular Multiselect Field</h2>
+<select id="field2" multiple>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+<h2>Multiselect with 2 Tag Limit and Callbacks (see console logs for examples)</h2>
+<select id="field3" multiple>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+<hr>
+<h2>Behind the scenes</h2>
+<p>Below is an example that illustrates the functionality of this library. As you select options, the hidden select field values update. Therefore, when you handle your form, you'd handle it like you would normally because the select field is still present and updating. Try it out below and see what's happening.</p>
+<select id="field4" multiple style="display: block !important">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
 </select>
 <script src="../dist/tagselector.js"></script>
 <script>
-  var a = new TagSelector(document.getElementById('test'));
-  var b = new TagSelector(document.getElementById('test2'), {
+  var field1 = new TagSelector(document.getElementById('field1'));
+
+  var field2 = new TagSelector(document.getElementById('field2'));
+  
+  var field3 = new TagSelector(document.getElementById('field3'), {
     max: 2,
     onInit: function() {
-      console.log('inited!')
+      console.log('Field 3 initialization callback!');
     },
     onDestroy: function() {
-      console.log('destroyed!')
+      console.log('Field 3 destruction callback!');
     },
     onSelect: function(value, text) {
-      console.log(`Selected item with value: '${value}' and text: '${text}'`)
+      console.log('Selected item with value: ' + value + ' and text: ' + text);
     },
     onDeselect: function(value, text) {
-      console.log(`Deselected item with value: '${value}' and text: '${text}'`)
+      console.log('Deselected item with value: ' + value + ' and text: ' + text);
     },
   });
+
+  var field4 = new TagSelector(document.getElementById('field4'));
 </script>
 </body>
 </html>

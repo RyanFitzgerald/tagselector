@@ -1,12 +1,15 @@
 {
   "name": "tagselector",
   "version": "0.1.1",
-  "description": "Easily turns multiselects into styleable and user friendly tag clouds",
+  "description": "Turn HTML select fields into customizable / user friendly tags",
   "main": "dist/tagselector.js",
   "scripts": {
-    "watch": "gulp watch",
+    "watch": "babel --minified src/tagselector.js -o dist/tagselector.js --watch",
     "lint": "eslint src",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "build": "npm run build-js && npm run build-css",
+    "build-js": "babel --minified src/tagselector.js -o dist/tagselector.js",
+    "build-css": "node-sass --include-path scss src/tagselector.scss dist/tagselector.css --output-style compressed"
   },
   "repository": {
     "type": "git",
@@ -16,8 +19,9 @@
     "tag",
     "select",
     "cloud",
+    "tagcloud",
+    "customize",
     "multiple",
-    "select",
     "dropdown"
   ],
   "author": {
@@ -30,13 +34,11 @@
   },
   "homepage": "https://github.com/RyanFitzgerald/tagselector#readme",
   "devDependencies": {
-    "eslint": "^4.5.0",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^4.0.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^3.0.0",
-    "gulp-wait": "0.0.2"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-rename-umd-globals": "^1.0.0",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "node-sass": "^4.5.3"
   }
 }
