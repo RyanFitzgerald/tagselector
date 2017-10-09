@@ -1,163 +1,48 @@
-/*!
- * Name: tagselector.js
- * Author: Ryan Fitzgerald
- * Version: 0.0.3
- * Repo: https://github.com/RyanFitzgerald/tagselector
- * Issues: https://github.com/RyanFitzgerald/tagselector/issues
- * License: MIT
- */
-(function(root, TagSelector) {
-  "use strict";
-  if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-      module.exports = TagSelector();
-  } else if (typeof define === "function" && define.amd) {
-      define(function() {
-          return TagSelector();
-      });
-  } else {
-      root.TagSelector = TagSelector();
-  }
-})(this, function() {
-  "use strict";
-  var defaults = {
-      max: false,
-      onInit: false,
-      onDestroy: false,
-      onSelect: false,
-      onDeselect: false
-  };
-  var extend = function(target, userSettings) {
-      if (typeof userSettings !== "object") {
-          return;
-      }
-      var updated = {};
-      Object.keys(target).forEach(function(key) {
-          if (userSettings[key]) {
-              updated[key] = userSettings[key];
-          } else {
-              updated[key] = target[key];
-          }
-      });
-      return updated;
-  };
-  var insertAfter = function(ele, ref) {
-      ref.parentNode.insertBefore(ele, ref.nextSibling);
-  };
-  var hasClass = function(ele, cls) {
-      return ("" + ele.className + "").indexOf(" " + cls + "") > -1;
-  };
-  var removeClass = function(ele, cls) {
-      ele.className = ele.className.replace(cls, "");
-  };
-  var getOptions = function(target) {
-      var optionList = target.options;
-      var optionObj = {};
-      for (var i = 0; i < optionList.length; i++) {
-          optionObj[optionList[i].value] = {
-              text: optionList[i].text,
-              index: i,
-              selected: optionList[i].selected
-          };
-      }
-      return optionObj;
-  };
-  function TagSelector(ele, userSettings) {
-      var settingsObj = userSettings || {};
-      this.target = document.getElementById(ele) || false;
-      this.selected = [];
-      this.options = getOptions(this.target);
-      this.wrapper = document.createElement("div");
-      this.wrapper.className = "tagselector-wrap";
-      if (!this.target || this.target.tagName !== "SELECT") {
-          console.error("Error: Must provide a valid ID for select field");
-          return;
-      }
-      this.settings = extend(defaults, settingsObj);
-      this.init();
-  }
-  TagSelector.prototype.init = function() {
-      var _options = this.options;
-      var _selected = this.selected;
-      var _wrapper = this.wrapper;
-      var _tagListener = this.tagListener.bind(this);
-      this.target.setAttribute("multiple", true);
-      this.target.style.display = "none";
-      insertAfter(this.wrapper, this.target);
-      Object.keys(_options).forEach(function(key, i) {
-          var tag = document.createElement("span");
-          tag.className = "tagselector-tag";
-          tag.innerHTML = _options[key].text;
-          tag.dataset.tagkey = key;
-          tag.dataset.tag = i;
-          if (_options[key].selected) {
-              tag.className += " active";
-              _selected.push(key);
-          }
-          _tagListener(tag);
-          _wrapper.appendChild(tag);
-      });
-      if (this.settings.onInit && typeof this.settings.onInit === "function") {
-          this.settings.onInit();
-      }
-  };
-  TagSelector.prototype.tagListener = function(tag) {
-      var _target = this.target;
-      var _options = this.options;
-      var _selected = this.selected;
-      var _settings = this.settings;
-      var _wrapper = this.wrapper;
-      tag.addEventListener("click", function() {
-          var key = this.dataset.tagkey;
-          var index = _options[key].index;
-          if (hasClass(this, "active")) {
-              removeClass(this, " active");
-              var keyIndex = _selected.indexOf(key);
-              if (keyIndex > -1) {
-                  _selected.splice(keyIndex, 1);
-              }
-              _target.options[index].selected = false;
-              if (_settings.onDeselect && typeof _settings.onDeselect === "function") {
-                  _settings.onDeselect(key, _options[key].text);
-              }
-          } else {
-              this.className += " active";
-              _selected.push(key);
-              _target.options[index].selected = true;
-              if (_settings.onSelect && typeof _settings.onSelect === "function") {
-                  _settings.onSelect(key, _options[key].text);
-              }
-              if (_settings.max && _selected.length > _settings.max) {
-                  var removeIndex = _options[_selected[0]].index;
-                  _target.options[removeIndex].selected = false;
-                  removeClass(_wrapper.querySelector('.active[data-tagkey="' + _selected[0] + '"]'), " active");
-                  _selected.shift();
-                  if (_settings.onDeselect && typeof _settings.onDeselect === "function") {
-                      _settings.onDeselect(_selected[0], _options[_selected[0]].text);
-                  }
-              }
-          }
-      });
-  };
-  TagSelector.prototype.destroy = function() {
-      this.options = null;
-      this.selected = null;
-      this.wrapper.parentNode.removeChild(this.wrapper);
-      this.wrapper = null;
-      this.target.style.display = "initial";
-      this.target = null;
-      if (this.settings.onDestroy && typeof this.settings.onDestroy === "function") {
-          this.settings.onDestroy();
-      }
-      this.settings = null;
-  };
-  TagSelector.prototype.reload = function() {
-      this.options = null;
-      this.selected = [];
-      this.wrapper.parentNode.removeChild(this.wrapper);
-      this.options = getOptions(this.target);
-      this.wrapper = document.createElement("div");
-      this.wrapper.className = "tagselector-wrap";
-      this.init();
-  };
-  return TagSelector;
-});
+(function(global,factory){if(typeof define==='function'&&define.amd){define(['module'],factory)}else if(typeof exports!=='undefined'){factory(module)}else{var mod={exports:{}};factory(mod);global.TagSelector=mod.exports}})(this,function(module){'use strict';function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function')}}var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if('value'in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor}}();/*!
+* TagSelector
+* 
+* @author Ryan Fitzgerald
+* @version 0.2.0
+* @license MIT
+* 
+* Repo: https://github.com/RyanFitzgerald/tagselector
+* Issues: https://github.com/RyanFitzgerald/tagselector/issues
+*/var defaults={max:false,onInit:false,onDestroy:false,onSelect:false,onDeselect:false};var getSettings=function getSettings(userSettings){var updated={};Object.keys(defaults).forEach(function(key){if(userSettings[key]){updated[key]=userSettings[key]}else{updated[key]=defaults[key]}});return updated};var getOptions=function getOptions(ele){var optionList=ele.options;var optionObj={};for(var i=0;i<optionList.length;i++){optionObj[optionList[i].value]={'text':optionList[i].text,'index':i,'selected':optionList[i].selected}}return optionObj};var insertAfter=function insertAfter(ele,ref){ref.parentNode.insertBefore(ele,ref.nextSibling)};var TagSelector=function(){function TagSelector(ele,userSettings){_classCallCheck(this,TagSelector);// Create required properties
+this.ele=ele;this.userSettings=userSettings||{};this.isMultiple=this.ele.multiple;this.selected=[];this.options={};this.settings={};this.wrapper=null;// Ensure ele was a valid select field
+if(!this.ele||this.ele===null||this.ele.tagName!=='SELECT'){console.error('Error: Must provide a valid ID for select field');return}// Initialize
+this.init()}_createClass(TagSelector,[{key:'init',value:function init(){var _this=this;// Get options and settings
+this.options=getOptions(this.ele);this.settings=getSettings(this.userSettings);// Hide select
+this.ele.style.display='none';// Create wrapper element
+this.wrapper=document.createElement('div');this.wrapper.className='tagselector-wrapper';insertAfter(this.wrapper,this.ele);// Add tags within wrapper
+Object.keys(this.options).forEach(function(key,i){// Create tag with necessary properties
+var tag=document.createElement('span');tag.className='tagselector-tag';tag.innerHTML=_this.options[key].text;tag.dataset.tagvalue=key;tag.dataset.tagindex=_this.options[key].index;// Add active class if selected
+if(_this.options[key].selected){tag.classList.add('active');_this.selected.push(key)}// Add listener
+_this.addTagListener(tag);// Add tag to wrapper
+_this.wrapper.appendChild(tag)});// Call init function if provided
+if(this.settings.onInit&&typeof this.settings.onInit==='function'){this.settings.onInit()}}},{key:'addTagListener',value:function addTagListener(tag){// Save copies of needed properties
+var selected=this.selected;var ele=this.ele;var wrapper=this.wrapper;var isMultiple=this.isMultiple;var settings=this.settings;var options=this.options;tag.addEventListener('click',function(){var value=this.dataset.tagvalue;var index=this.dataset.tagindex;if(this.classList.contains('active')){// Do nothing if regular select
+if(!isMultiple){return}// Remove active class
+this.classList.remove('active');// Remove key from selected array
+var keyIndex=selected.findIndex(function(x){return x.value===value&&x.index===index});if(keyIndex>-1){selected.splice(keyIndex,1)}// Deselect it
+ele.options[index].selected=false;// Call deselect function if provided
+if(settings.onDeselect&&typeof settings.onDeselect==='function'){settings.onDeselect(value,options[value].text)}}else{// Handle based on type of select
+if(isMultiple){// Push to selected array
+selected.push({value:value,index:index});// Check if greater than max
+if(settings.max&&selected.length>settings.max){// Get index to remove
+var removeValue=selected[0].value;var removeIndex=options[removeValue].index;// Deselect it
+ele.options[removeIndex].selected=false;// Remove active class from first element
+wrapper.querySelector('.tagselector-tag.active[data-tagvalue="'+removeValue+'"]').classList.remove('active');// Call deselect function if provided
+if(settings.onDeselect&&typeof settings.onDeselect==='function'){settings.onDeselect(selected[0].value,options[selected[0].value].text)}// Pop first member of array
+selected.shift()}}else{// Remove all active classes
+wrapper.querySelector('.tagselector-tag.active').classList.remove('active')}// Select it
+ele.options[index].selected=true;// Call select function if provided
+if(settings.onSelect&&typeof settings.onSelect==='function'){settings.onSelect(value,options[value].text)}// Add active class
+this.classList.add('active')}})}},{key:'destroy',value:function destroy(){// Clear properties
+this.selected=[];this.options={};// Delete wrapper
+this.wrapper.parentNode.removeChild(this.wrapper);this.wrapper=null;// Show ele and delete reference
+this.ele.style.display='initial';// Call destroy function if provided
+if(this.settings.onDestroy&&typeof this.settings.onDestroy==='function'){this.settings.onDestroy()}// Delete settings
+this.settings={}}},{key:'reload',value:function reload(){// Clear properties
+this.selected=[];this.options={};// Delete wrapper
+this.wrapper.parentNode.removeChild(this.wrapper);this.wrapper=null;// Call init
+this.init()}}]);return TagSelector}();module.exports=TagSelector});

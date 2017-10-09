@@ -1,11 +1,10 @@
-.tagselector-tag {
-  background: #eee;
-  cursor: pointer;
-  display: inline-block;
-  margin: 5px;
-  padding: 10px;
-}
-
-.tagselector-tag:hover, .tagselector-tag.active {
-  background: #ccc;
-}
+/*!
+ * TagSelector
+ * 
+ * @author Ryan Fitzgerald
+ * @version 0.2.0
+ * @license MIT
+ * 
+ * Repo: https://github.com/RyanFitzgerald/tagselector
+ * Issues: https://github.com/RyanFitzgerald/tagselector/issues
+ */.tagselector-tag{border:1px solid #e2e2e2;border-radius:4px;color:#637280;cursor:pointer;display:inline-block;margin:10px 10px 10px 0;padding:10px 15px}.tagselector-tag:hover,.tagselector-tag.active{background:#545969;border:1px solid #545969;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.15);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.15);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.15);color:#fff}

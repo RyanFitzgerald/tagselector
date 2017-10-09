@@ -1,62 +1,77 @@
-<!doctype html>
-<html class="no-js" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tag Selector Demo</title>
-    <link href="tagselector.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tag Selector Demo</title>
+  <link rel="stylesheet" href="tagselector.css">
 </head>
 <style>
-    #select3 {
-        display: block !important;
-    }
+  #field4 {
+    display: block !important;
+  }
+
+  p {
+    max-width: 700px;
+  }
 </style>
 <body>
-<h1>Tag Selector Demo</h1>
+<h1>Tag Selector Demos</h1>
 <hr>
-<h2>No Tag Limit</h2>
-<select id="select1">
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="opel">Opel</option>
-    <option value="audi">Audi</option>
+<h2>Regular Select Field</h2>
+<select id="field1">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
 </select>
-<h2>2 Tag Limit with callbacks (see console logs)</h2>
-<select id="select2">
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="opel">Opel</option>
-    <option value="audi">Audi</option>
+<h2>Regular Multiselect Field</h2>
+<select id="field2" multiple>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+<h2>Multiselect with 2 Tag Limit and Callbacks (see console logs for examples)</h2>
+<select id="field3" multiple>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
 </select>
 <hr>
-<h2>Behind The Scenes</h2>
-<p>When you select a tag, it automatically updates the hidden multiselect field. To see what's happening behind the scenes, click the tags below.</p>
-<select id="select3">
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="opel">Opel</option>
-    <option value="audi">Audi</option>
+<h2>Behind the scenes</h2>
+<p>Below is an example that illustrates the functionality of this library. As you select options, the hidden select field values update. Therefore, when you handle your form, you'd handle it like you would normally because the select field is still present and updating. Try it out below and see what's happening.</p>
+<select id="field4" multiple style="display: block !important">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
 </select>
 <script src="tagselector.js"></script>
 <script>
-var a = new TagSelector('select1');
-var b = new TagSelector('select2', {
+  var field1 = new TagSelector(document.getElementById('field1'));
+
+  var field2 = new TagSelector(document.getElementById('field2'));
+  
+  var field3 = new TagSelector(document.getElementById('field3'), {
     max: 2,
     onInit: function() {
-        console.log('inited!')
+      console.log('Field 3 initialization callback!');
     },
     onDestroy: function() {
-        console.log('destroyed!')
+      console.log('Field 3 destruction callback!');
     },
     onSelect: function(value, text) {
-        console.log(`Selected item with value: '${value}' and text: '${text}'`)
+      console.log('Selected item with value: ' + value + ' and text: ' + text);
     },
     onDeselect: function(value, text) {
-        console.log(`Deselected item with value: '${value}' and text: '${text}'`)
-    }
-});
-var c = new TagSelector('select3');
+      console.log('Deselected item with value: ' + value + ' and text: ' + text);
+    },
+  });
+
+  var field4 = new TagSelector(document.getElementById('field4'));
 </script>
 </body>
 </html>
