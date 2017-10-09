@@ -7,6 +7,7 @@ Features include:
 * ES6 Class-based (Transpiled to ES5 / CommonJS)
 * ~2kb in size gzipped
 * 100% Dependency free
+* Comes completely unstyled or with an optional base theme (see screenshot)
 * Easy to style with well-named CSS classes
 
 ![Tag selector demo](https://i.imgur.com/e9zYGgp.jpg)
