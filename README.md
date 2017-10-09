@@ -9,7 +9,7 @@ Features include:
 * 100% Dependency free
 * Easy to style with well-named CSS classes
 
-![Tag selector demo](http://i66.tinypic.com/2pt5bae.jpg)
+![Tag selector demo](https://i.imgur.com/e9zYGgp.jpg)
 
 ### [See demo here](http://ryanfitzgerald.github.io/tagselector/)
 
