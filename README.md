@@ -9,6 +9,7 @@ Features include:
 * 100% Dependency free
 * Comes completely unstyled or with an optional base theme (see screenshot)
 * Easy to style with well-named CSS classes
+* Mobile Friendly
 
 ![Tag selector demo](https://i.imgur.com/e9zYGgp.jpg)
 
