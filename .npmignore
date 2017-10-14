@@ -1,4 +1,5 @@
 /src
 /demo
 /test
-gulpfile.js
+.babelrc
+.eslintrc

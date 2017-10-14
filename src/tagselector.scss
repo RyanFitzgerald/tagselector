@@ -2,7 +2,7 @@
  * TagSelector
  * 
  * @author Ryan Fitzgerald
- * @version 0.2.0
+ * @version 0.2.1
  * @license MIT
  * 
  * Repo: https://github.com/RyanFitzgerald/tagselector
@@ -18,7 +18,6 @@
   margin: 10px 10px 10px 0;
   padding: 10px 15px;
 
-  &:hover,
   &.active {
     background: #545969;
     border: 1px solid #545969;
